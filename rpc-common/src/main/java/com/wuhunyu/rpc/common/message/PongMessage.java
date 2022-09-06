@@ -13,8 +13,8 @@ import io.netty.channel.ChannelHandler;
 @ChannelHandler.Sharable
 public class PongMessage extends Message {
 
-    public PongMessage(Long sequenceId, Integer messageType, Byte serializeType, Byte version) {
-        super(sequenceId, messageType, serializeType, version);
+    public PongMessage(Long sequenceId, Byte serializeType, Byte version) {
+        super(sequenceId, MessageTypeEnum.PONG.getType(), serializeType, version);
     }
 
 }

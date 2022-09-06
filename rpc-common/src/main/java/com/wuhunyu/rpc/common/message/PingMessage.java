@@ -20,7 +20,7 @@ public class PingMessage extends Message {
     public PingMessage() {
         // 填充默认参数
         super(SequenceUtil.nextId(),
-                MessageTypeEnum.RESPONSE.getType(),
+                MessageTypeEnum.PING.getType(),
                 ConfigProperties.getProperty(CommonConstant.SERIALIZE_TYPE, Byte.class) == null ?
                         SerializeTypeEnum.JACKSON.getType()
                         : ConfigProperties.getProperty(CommonConstant.SERIALIZE_TYPE, Byte.class),

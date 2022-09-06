@@ -138,14 +138,14 @@ public final class RpcServerApplication {
                         pipeline.addLast(new IdleStateHandler(IDLE_READ_SECOND, 0, 0));
                         // 帧 解码器
                         pipeline.addLast(new SelfLengthFieldBasedFrameDecoder(MAX_READ_LENGTH));
+                        // 消息编解码器
+                        pipeline.addLast(MESSAGE_CODEC);
                         // 心跳检测
                         pipeline.addLast(IDLE_HANDLER);
                         // ping处理
                         pipeline.addLast(PING_HANDLER);
                         // pong处理
                         pipeline.addLast(PONG_HANDLER);
-                        // 消息编解码器
-                        pipeline.addLast(MESSAGE_CODEC);
                         // 请求事件处理
                         pipeline.addLast(REQUEST_MESSAGE_HANDLER);
                         // 连接断开事件 & 异常处理事件

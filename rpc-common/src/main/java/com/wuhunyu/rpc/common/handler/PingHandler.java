@@ -23,7 +23,6 @@ public class PingHandler extends SimpleChannelInboundHandler<PingMessage> {
         // 响应
         PongMessage pongMessage = new PongMessage(
                 pingMessage.getSequenceId(),
-                pingMessage.getMessageType(),
                 pingMessage.getSerializeType(),
                 pingMessage.getVersion());
         channelHandlerContext.writeAndFlush(pongMessage);
