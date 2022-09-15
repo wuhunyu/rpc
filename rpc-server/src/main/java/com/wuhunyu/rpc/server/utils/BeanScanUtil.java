@@ -32,6 +32,7 @@ public final class BeanScanUtil {
         String packageDirName = packageName.replace('.', '/');
         // 定义一个枚举的集合 并进行循环来处理这个目录下的things
         Enumeration<URL> dirs;
+        ClassLoader classLoader = BeanScanUtil.class.getClassLoader();
         try {
             dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
             // 循环迭代下去
@@ -50,10 +51,10 @@ public final class BeanScanUtil {
                     BeanScanUtil.fetchFileList(dir, fileList);
                     for (File f : fileList) {
                         String fileName = f.getAbsolutePath();
-                        if (fileName.endsWith(".class") && !fileName.endsWith("Instance.class")) {
+                        if (fileName.endsWith(".class")) {
                             String noSuffixFileName = fileName.substring(8 + fileName.lastIndexOf("classes"), fileName.indexOf(".class"));
                             String filePackage = noSuffixFileName.replaceAll("\\\\", ".");
-                            Class<?> clazz = Class.forName(filePackage);
+                            Class<?> clazz = classLoader.loadClass(filePackage);
                             BeanScanUtil.putBeans(clazz, map);
                         }
                     }
@@ -93,7 +94,7 @@ public final class BeanScanUtil {
                                     // 去掉后面的".class" 获取真正的类名
                                     String className = name.substring(packageName.length() + 1, name.length() - 6);
                                     try {
-                                        Class<?> clazz = Class.forName(packageName + '.' + className);
+                                        Class<?> clazz = classLoader.loadClass(packageName + '.' + className);
                                         BeanScanUtil.putBeans(clazz, map);
                                     } catch (ClassNotFoundException e) {
                                         e.printStackTrace();
